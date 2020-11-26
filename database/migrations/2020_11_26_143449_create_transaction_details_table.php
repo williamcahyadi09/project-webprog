@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateTransactionDetailsTable extends Migration
 {
@@ -14,9 +15,9 @@ class CreateTransactionDetailsTable extends Migration
     public function up()
     {
         Schema::create('transaction_details', function (Blueprint $table) {
-            $table->foreignId('transaction_id')->constrained('transactions')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('shoe_id')->constrained('shoes')->onDelete('cascade')->onUpdate('cascade');
-            $table->primary(array('transaction_id', 'shoe_id'));
+            $table->unsignedBigInteger('transaction_id');
+            $table->unsignedBigInteger('shoe_id');
+            $table->primary(['transaction_id', 'shoe_id']);
             $table->integer('quantity');
             $table->timestamps();
         });
