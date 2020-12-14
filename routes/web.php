@@ -20,3 +20,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home/{name}', 'HomeController@getShoeByName');
+Route::get('home/{id}/transactions', 'HomeController@getUserTransaction');

@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Shoe;
+use App\Transaction;
+use App\TransactionDetail;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -21,8 +25,35 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+
+    // show all shoes
     public function index()
     {
-        return view('home');
+        $allShoes = Shoe::paginate(6);
+        //dd($allShoes);
+        return view('home', ['shoes' => $allShoes]);
+    }
+
+    // get shoe by name
+    public function getShoeByName(string $name)
+    {
+        $name = strtolower($name);
+        $shoes = Shoe::where('name', 'LIKE', '%' . $name . '%')->get();
+        //dd($shoes);
+        return view('home', ['shoes' => $shoes]);
+    }
+
+    // view user history transaction
+    public function getUserTransaction(int $id)
+    {
+        $user = User::find($id);
+        $transactions = Transaction::where('user_id', $user['id'])->get();
+
+        //$transactionDetails = TransactionDetail::where('transaction_id', $transactions['id'])->get();
+        foreach ($transactions as $transaction) {
+            $transaction->transaction_details = TransactionDetail::where('transaction_id', $transaction['id'])->get();
+        }
+        //dd($transactions);
+        return view('alltransactions', ['transactions' => $transactions]);
     }
 }

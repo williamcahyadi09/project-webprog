@@ -5,6 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
+                <!--
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
@@ -16,6 +17,14 @@
 
                     {{ __('You are logged in!') }}
                 </div>
+                -->
+                @foreach($shoes as $shoe)
+                <div class="card-header">{{ $shoe->name }}</div>
+
+                <div class="card-body">
+                    {{$shoe->description}}
+                </div>
+                @endforeach
             </div>
         </div>
     </div>
