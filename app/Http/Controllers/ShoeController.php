@@ -7,7 +7,6 @@ use App\Shoe;
 
 class ShoeController extends Controller
 {
-
     // show all shoes
     public function index()
     {
@@ -22,5 +21,11 @@ class ShoeController extends Controller
         $shoes = Shoe::where('name', 'LIKE', '%' . $name . '%')->get();
         //dd($shoes);
         return view('home', ['shoes' => $shoes]);
+    }
+
+    public function getShoeDetail(Shoe $shoe)
+    {
+        // dd($shoe);
+        return view('shoe_detail', ['shoe' => $shoe]);
     }
 }

@@ -18,14 +18,20 @@
                     {{ __('You are logged in!') }}
                 </div>
                 -->
-                @foreach($shoes as $shoe)
                 <div class="card-header">{{ $shoe->name }}</div>
 
                 <div class="card-body">
-                    {{$shoe->description}}
-                    <a href="/shoe/{{$shoe->id}}">view detail</a>
+                    {{Auth::user()->username}}<br>
+                    <img style="height: 300px; width:300px;" src="{{asset('/images/'.$shoe['image'])}}"><br>
+                    {{$shoe->description}}<br>
+                    Rp. {{$shoe->price}}<br>
+                    @if(Auth::user()->role_id==1)
+                    <a href="cart/add">Update Shoe</a>
+                    @else
+                    <a href="">Add to cart</a>
+                    @endif
                 </div>
-                @endforeach
+
             </div>
         </div>
     </div>
