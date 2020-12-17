@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,6 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::get('/home', 'HomeController@index');
-Route::get('/home/{name}', 'HomeController@getShoeByName');
-Route::get('/transactions', 'HomeController@getUserTransaction');
+Route::get('/home', 'ShoeController@index');
+Route::get('/home/{name}', 'ShoeController@getShoeByName');
+Route::get('/transactions', 'TransactionController@getUserTransaction');
