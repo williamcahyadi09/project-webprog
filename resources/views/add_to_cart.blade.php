@@ -25,11 +25,16 @@
                     <img style="height: 300px; width:300px;" src="{{asset('/images/'.$shoe['image'])}}"><br>
                     {{$shoe->description}}<br>
                     Rp. {{$shoe->price}}<br>
-                    @if(Auth::user()->role_id==1)
-                    <a href="/cart/create/{{$shoe->id}}">Update Shoe</a>
-                    @else
-                    <a href="/cart/create/{{$shoe->id}}">Add to cart</a>
-                    @endif
+                    <form method="post" action='/cart/{{$shoe->id}}'>
+                        @csrf
+                        <div class="form-group row">
+                            <label for="quantity" class="col-md-2 col-form-label">quantity</label>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control" id="quantity" placeholder="input quantity" name="quantity">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
                 </div>
 
             </div>

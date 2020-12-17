@@ -20,8 +20,14 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::get('/home', 'ShoeController@index');
-Route::get('/shoe/{shoe}', 'ShoeController@getShoeDetail');
 Route::get('/home/{name}', 'ShoeController@getShoeByName');
 
+
+Route::get('/cart', 'CartController@index');
+Route::post('/cart/{shoe}', 'CartController@store');
+Route::get('/cart/create/{shoe}', 'CartController@create');
+
+
+Route::get('/shoe/{shoe}', 'ShoeController@getShoeDetail');
 
 Route::get('/transactions', 'TransactionController@getUserTransaction');
