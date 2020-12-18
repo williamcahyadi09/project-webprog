@@ -12,20 +12,28 @@
                 <img style="height: 300px; width:300px;" src="{{asset('/images/'.$shoe['image'])}}"><br>
                 {{$shoe->description}}<br>
                 Rp. {{$shoe->price}}<br>
-                <form method="post" action='/cart/{{$shoe->id}}'>
+                <form method="post" action='/cart/{{$shoe->id}}' class="d-inline">
+                    @method('put')
                     @csrf
                     <div class="form-group row">
-                        <label for="quantity" class="col-md-2 col-form-label">quantity</label>
+                        <label for="quantity" class="col-md-2 col-form-label">Quantity</label>
                         <div class="col-md-4">
-                            <input type="number" min='1' class="form-control @error('quantity') is-invalid @enderror" id="quantity" placeholder="input quantity" name="quantity">
+                            <input type="number" min='1' class="form-control @error('quantity') is-invalid @enderror" id="quantity" placeholder="input quantity" name="quantity" value="{{$cart_detail->quantity}}">
+
                             @error('quantity')
                             <div class="invalid-feedback">
                                 {{$message}}
                             </div>
                             @enderror
+
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Add to cart</button>
+                    <button type="submit" class="btn btn-primary">Update cart</button>
+                </form>
+                <form method="post" action="/cart/{{$shoe->id}}" class="d-inline ml-3">
+                    @method('delete')
+                    @csrf
+                    <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             </div>
 

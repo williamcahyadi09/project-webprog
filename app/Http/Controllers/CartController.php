@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\CartDetail;
+use App\Transaction;
+use App\TransactionDetail;
 use App\Shoe;
 
 class CartController extends Controller
@@ -52,15 +54,41 @@ class CartController extends Controller
     public function store(Request $request, Shoe $shoe)
     {
         //
+        // $user = Auth::user();
+        // $cartDetail = new CartDetail();
+        // $cartDetail->user_id = $user->id;
+        // $cartDetail->shoe_id = $shoe->id;
+        // $cartDetail->quantity = $request->quantity;
+
+        // $cartDetail->save();
+
+        $request->validate([
+            'quantity' => 'required'
+        ]);
+
         $user = Auth::user();
-        $cartDetail = new CartDetail();
-        $cartDetail->user_id = $user->id;
-        $cartDetail->shoe_id = $shoe->id;
-        $cartDetail->quantity = $request->quantity;
+        $cart_detail = CartDetail::where([
+            ['user_id', $user->id],
+            ['shoe_id', $shoe->id]
+        ])->first();
 
-        $cartDetail->save();
-
-        return redirect('/cart');
+        if ($cart_detail != null) {
+            CartDetail::where([
+                ['user_id', $user->id],
+                ['shoe_id', $shoe->id]
+            ])->update([
+                'quantity' => $cart_detail->quantity + $request->quantity
+            ]);
+        } else {
+            CartDetail::create(
+                [
+                    'user_id' => $user->id,
+                    'shoe_id' => $shoe->id,
+                    'quantity' => $request->quantity
+                ]
+            );
+        }
+        return redirect('/cart')->with('status', 'Item successfully added to cart !');
     }
 
     /**
@@ -80,9 +108,17 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Shoe $shoe)
     {
         //
+        $user = Auth::user();
+        $cart_detail = CartDetail::where([
+            ['user_id', $user->id],
+            ['shoe_id', $shoe->id]
+        ])->first();
+        // dd($cart_detail);
+        //dd($shoe);
+        return view('edit_cart', ['cart_detail' => $cart_detail, 'shoe' => $shoe]);
     }
 
     /**
@@ -92,9 +128,17 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Shoe $shoe)
     {
         //
+        $user = Auth::user();
+        CartDetail::where([
+            ['user_id', $user->id],
+            ['shoe_id', $shoe->id]
+        ])->update([
+            'quantity' => $request->quantity
+        ]);
+        return redirect('/cart')->with('status', 'Cart Updated !');
     }
 
     /**
@@ -103,8 +147,46 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Shoe $shoe)
     {
         //
+        $user = Auth::user();
+        CartDetail::where([
+            ['user_id', $user->id],
+            ['shoe_id', $shoe->id]
+        ])->delete();
+        return redirect('/cart')->with('status', 'Item removed from cart !');
+    }
+
+    public function checkout()
+    {
+
+        Transaction::create([
+            'user_id' => Auth::user()->id,
+            'dateTime' => now()
+        ]);
+
+
+        $cartList = CartDetail::where([
+            ['user_id', Auth::user()->id]
+        ])->get();
+
+        $latest_transaction = Transaction::where([
+            ['user_id', Auth::user()->id]
+        ])->latest('dateTime')->first();
+
+        foreach ($cartList as $detail) {
+            TransactionDetail::create([
+                'transaction_id' => $latest_transaction->id,
+                'shoe_id' => $detail->shoe_id,
+                'quantity' => $detail->quantity
+            ]);
+        }
+
+        CartDetail::where([
+            ['user_id', Auth::user()->id]
+        ])->delete();
+
+        return redirect('/transactions')->with('status', 'Transaction successful');
     }
 }
