@@ -50,7 +50,7 @@ class ShoeController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'price' => 'required',
+            'price' => 'required|integer|min:100',
             'description' => 'required',
             'file' => 'required|mimes:jpg,jpeg,png'
         ]);
@@ -84,7 +84,7 @@ class ShoeController extends Controller
 
         $request->validate([
             'name' => 'required',
-            'price' => 'required',
+            'price' => 'required|integer|min:100',
             'description' => 'required',
             'file' => 'nullable|mimes:jpg,jpeg,png'
         ]);

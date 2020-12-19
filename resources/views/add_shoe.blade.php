@@ -4,6 +4,13 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            @if ($errors->any())
+            @foreach ($errors->all() as $error)
+            <div class="alert alert-danger">
+                {{ $error }}
+            </div>
+            @endforeach
+            @endif
             <div class="card">
                 <div class="card-header">
                     Add Shoe
@@ -15,44 +22,24 @@
                             <label for="name" class="col-md-3 col-form-label">Shoe Name</label>
                             <div class="col-md-7">
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Input shoe name" name="name" value="{{old('name')}}">
-                                @error('name')
-                                <div class="invalid-feedback">
-                                    {{$message}}
-                                </div>
-                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="price" class="col-md-3 col-form-label">Price</label>
                             <div class="col-md-7">
-                                <input type="number" min='100' class="form-control @error('price') is-invalid @enderror" placeholder="Input price" name="price" value="{{old('price')}}">
-                                @error('price')
-                                <div class="invalid-feedback">
-                                    {{$message}}
-                                </div>
-                                @enderror
+                                <input type="number" class="form-control @error('price') is-invalid @enderror" placeholder="Input price" name="price" value="{{old('price')}}">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="description" class="col-md-3 col-form-label">Shoe Description</label>
                             <div class="col-md-7">
                                 <input type="text" class="form-control @error('description') is-invalid @enderror" placeholder="Input shoe description" name="description" value="{{old('description')}}">
-                                @error('description')
-                                <div class="invalid-feedback">
-                                    {{$message}}
-                                </div>
-                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="file" class="col-md-3 col-form-label">Upload image</label>
                             <div class="custom-file col-md-6 ml-3">
                                 <input type="file" class="form-control custom-file-input @error('file') is-invalid @enderror" id="chooseFile" onchange="getFileName()" name="file">
-                                @error('file')
-                                <div class="invalid-feedback">
-                                    {{$message}}
-                                </div>
-                                @enderror
                                 <label class="custom-file-label" for="chooseFile" id="fileLabel">Choose file</label>
                             </div>
                         </div>

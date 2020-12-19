@@ -4,6 +4,13 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            @if ($errors->any())
+            @foreach ($errors->all() as $error)
+            <div class="alert alert-danger">
+                {{ $error }}
+            </div>
+            @endforeach
+            @endif
             <div class="card"></div>
             <div class="card-header">{{ $shoe->name }}</div>
 
@@ -17,12 +24,8 @@
                     <div class="form-group row">
                         <label for="quantity" class="col-md-2 col-form-label">quantity</label>
                         <div class="col-md-4">
-                            <input type="number" min='1' class="form-control @error('quantity') is-invalid @enderror" id="quantity" placeholder="input quantity" name="quantity">
-                            @error('quantity')
-                            <div class="invalid-feedback">
-                                {{$message}}
-                            </div>
-                            @enderror
+                            <input type="number" class="form-control" id="quantity" placeholder="input quantity" name="quantity">
+
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Add to cart</button>

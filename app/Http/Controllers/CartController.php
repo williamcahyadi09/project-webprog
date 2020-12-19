@@ -55,7 +55,7 @@ class CartController extends Controller
     {
 
         $request->validate([
-            'quantity' => 'required'
+            'quantity' => 'required|integer|min:1'
         ]);
 
         $user = Auth::user();
@@ -123,6 +123,9 @@ class CartController extends Controller
     public function update(Request $request, Shoe $shoe)
     {
         //
+        $request->validate([
+            'quantity' => 'required|integer|min:1'
+        ]);
         $user = Auth::user();
         CartDetail::where([
             ['user_id', $user->id],
