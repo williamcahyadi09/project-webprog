@@ -31,10 +31,15 @@ Route::delete('/cart/{shoe}', 'CartController@destroy');
 Route::get('/cart/create/{shoe}', 'CartController@create');
 Route::get('/cart/edit/{shoe}', 'CartController@edit');
 Route::get('/cart/checkout', 'CartController@checkout');
-Route::resource('checkout', 'CartController');
 
 
 
-Route::get('/shoe/{shoe}', 'ShoeController@getShoeDetail');
+Route::get('/shoe/create', 'ShoeController@create');
+Route::post('/shoe/create', 'ShoeController@store');
+Route::get('/shoe/{shoe}', 'ShoeController@getShoeDetail')->name('shoe_detail');
+Route::patch('/shoe/{shoe}', 'ShoeController@update');
+Route::get('/shoe/edit/{shoe}', 'ShoeController@edit');
+
+
 
 Route::get('/transactions', 'TransactionController@getUserTransaction');

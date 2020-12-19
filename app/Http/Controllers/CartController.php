@@ -53,14 +53,6 @@ class CartController extends Controller
      */
     public function store(Request $request, Shoe $shoe)
     {
-        //
-        // $user = Auth::user();
-        // $cartDetail = new CartDetail();
-        // $cartDetail->user_id = $user->id;
-        // $cartDetail->shoe_id = $shoe->id;
-        // $cartDetail->quantity = $request->quantity;
-
-        // $cartDetail->save();
 
         $request->validate([
             'quantity' => 'required'
