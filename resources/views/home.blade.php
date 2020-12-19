@@ -23,7 +23,7 @@
 
                 <div class="card-body">
                     {{$shoe->description}}
-                    <a href="/shoe/{{$shoe->id}}">view detail</a>
+                    <a href="{{route('shoe_detail',[$shoe])}}">view detail</a>
                 </div>
                 @endforeach
             </div>
