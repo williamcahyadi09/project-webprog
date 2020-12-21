@@ -13,7 +13,7 @@
             @endif
             <div class="card">
                 <div class="card-header">
-                    Add Shoe
+                    <strong>Add Shoe</strong>
                 </div>
                 <div class="card-body">
                     <form method="post" action='/shoe/create' class="d-inline" enctype="multipart/form-data">

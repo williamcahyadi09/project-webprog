@@ -18,7 +18,7 @@ class ShoeController extends Controller
     public function getShoeByName(string $name)
     {
         $name = strtolower($name);
-        $shoes = Shoe::where('name', 'LIKE', '%' . $name . '%')->get();
+        $shoes = Shoe::where('name', 'LIKE', '%' . $name . '%')->paginate(6);
         //dd($shoes);
         return view('home', ['shoes' => $shoes]);
     }

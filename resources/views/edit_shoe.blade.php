@@ -13,7 +13,7 @@
             @endif
             <div class="card">
                 <div class="card-header">
-                    Edit Shoe
+                    <strong>Edit Shoe</strong>
                 </div>
                 <div class="card-body">
                     <form method="post" action='/shoe/{{$shoe->id}}' class="d-inline" enctype="multipart/form-data">
