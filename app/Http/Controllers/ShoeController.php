@@ -7,25 +7,24 @@ use App\Shoe;
 
 class ShoeController extends Controller
 {
-    // show all shoes
+    // menampilkan seluruh koleksi sepatu yang ada pada website
     public function index()
     {
         $allShoes = Shoe::paginate(6);
         return view('home', ['shoes' => $allShoes]);
     }
 
-    // get shoe by name
+    // fungsi untuk mencari sepatu dari nama nya
     public function getShoeByName(string $name)
     {
         $name = strtolower($name);
         $shoes = Shoe::where('name', 'LIKE', '%' . $name . '%')->paginate(6);
-        //dd($shoes);
         return view('home', ['shoes' => $shoes]);
     }
 
+    // me return detail sepatu
     public function getShoeDetail(Shoe $shoe)
     {
-        // dd($shoe);
         return view('shoe_detail', ['shoe' => $shoe]);
     }
 
@@ -34,6 +33,7 @@ class ShoeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // menampilkan form untuk membuat sepatu
     public function create(Shoe $shoe)
     {
         //
@@ -46,20 +46,25 @@ class ShoeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    // fungsi untuk menambahkan data sepatu pada tabel sepatu
     public function store(Request $request)
     {
+        // validasi field-field sepatu
         $request->validate([
             'name' => 'required',
             'price' => 'required|integer|min:100',
             'description' => 'required',
-            'file' => 'required|mimes:jpg,jpeg,png'
+            'file' => 'required|mimes:jpg,jpeg,png' // file harus berupa image sehingga extension nya harus berupa jpg, jpeg atau png
         ]);
 
         $shoe = new Shoe;
 
+        // kalau file ada dan sudah lolos validasi
         if ($request->file()) {
-            $image = $request->file->getClientOriginalName();
-            $request->file('file')->move('images', $image, 'public');
+            $image = $request->file->getClientOriginalName(); // untuk mendapat nama file
+            $request->file('file')->move('images', $image, 'public'); // simpan nama file di public/images
+            // add sepatu ke database
             Shoe::create([
                 'name' => $request->name,
                 'price' => $request->price,
@@ -82,6 +87,7 @@ class ShoeController extends Controller
         $id = $shoe->id;
         $current_image = $shoe->image;
 
+        // validasi field-field sepatu
         $request->validate([
             'name' => 'required',
             'price' => 'required|integer|min:100',
@@ -89,20 +95,25 @@ class ShoeController extends Controller
             'file' => 'nullable|mimes:jpg,jpeg,png'
         ]);
 
+        // kalau admin mau ganti gambar
         if ($request->file()) {
             $image = $request->file->getClientOriginalName();
             $request->file('file')->move('images', $image, 'public');
 
             $old_image_path = public_path() . '/' . $shoe->image;
-            unlink($old_image_path);
+            unlink($old_image_path); // function menghapus filename file lama
 
+            // update sepatu
             Shoe::find($shoe->id)->update([
                 'name' => $request->name,
                 'price' => $request->price,
                 'description' => $request->description,
                 'image' => $image
             ]);
-        } else {
+        }
+        // kalau admin gmw ganti gambar 
+        else {
+            // update sepatu
             Shoe::find($shoe->id)->update([
                 'name' => $request->name,
                 'price' => $request->price,
@@ -111,7 +122,6 @@ class ShoeController extends Controller
             ]);
         }
 
-        //dd($shoe->id);
         return redirect()->route('shoe_detail', [$shoe])->with('status', 'Shoe updated');
     }
 }
