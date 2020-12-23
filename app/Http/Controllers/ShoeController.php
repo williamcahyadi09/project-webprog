@@ -100,7 +100,7 @@ class ShoeController extends Controller
             $image = $request->file->getClientOriginalName();
             $request->file('file')->move('images', $image, 'public');
 
-            $old_image_path = public_path() . '/' . $shoe->image;
+            $old_image_path = public_path() . '/images' . '/' . $shoe->image;
             unlink($old_image_path); // function menghapus filename file lama
 
             // update sepatu
