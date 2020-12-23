@@ -29,11 +29,11 @@
                             <form method="post" action='/cart/{{$shoe->id}}'>
                                 @csrf
                                 <div class="form-group row">
-                                    <label for="quantity" class="col-md-2 col-form-label"><strong>Quantity</strong></label>
-                                    <div class="col-md-4">
+                                    <label for="quantity" class="col-md-3 col-form-label"><strong>Quantity</strong></label>
+                                    <div class="col-md-5">
                                         <input type="number" class="form-control" id="quantity" placeholder="Number" name="quantity">
                                     </div>
-                                    <button type="submit" class="btn btn-primary col-md-3">Add to cart</button>
+                                    <button type="submit" class="btn btn-primary col-md-3 mx-3">Add to cart</button>
                                 </div>
                             </form>
                         </div>
