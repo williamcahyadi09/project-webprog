@@ -76,12 +76,13 @@ class ShoeController extends Controller
         return redirect('/home')->with('status', 'Shoe successfully added');
     }
 
+    // menampilkan form edit sepatu
     public function edit(Shoe $shoe)
     {
         return view('edit_shoe', ['shoe' => $shoe]);
     }
 
-
+    // function update data sepatu 
     public function update(Request $request, Shoe $shoe)
     {
         $id = $shoe->id;
