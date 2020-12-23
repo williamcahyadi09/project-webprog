@@ -39,7 +39,9 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-
+    //untuk melakukan login dengan pilihan remember atau tidak
+    //jika login berhasil, akan diredirect ke home
+    //jika login gagal, akan kembali dan muncul popup gagal
     public function loginWithRemember(Request $request){
         $credential = [
             'email' => $request->email,
@@ -49,5 +51,6 @@ class LoginController extends Controller
         if(Auth::attempt($credential,$remember)){
             return redirect()->route('home');
         }
+        return redirect('login')->with('failed','Email or Password is incorrect');
     }
 }
