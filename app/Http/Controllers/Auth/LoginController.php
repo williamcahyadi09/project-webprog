@@ -42,15 +42,21 @@ class LoginController extends Controller
     //untuk melakukan login dengan pilihan remember atau tidak
     //jika login berhasil, akan diredirect ke home
     //jika login gagal, akan kembali dan muncul popup gagal
-    public function loginWithRemember(Request $request){
+    public function loginWithRemember(Request $request)
+    {
+        $request->validate([
+            'email' => ['required', 'string', 'email'],
+            'password' => ['required', 'string'],
+        ]);
+
         $credential = [
             'email' => $request->email,
             'password' => $request->password,
         ];
-        $remember = (!empty($request->remember))? true : false;
-        if(Auth::attempt($credential,$remember)){
+        $remember = (!empty($request->remember)) ? true : false;
+        if (Auth::attempt($credential, $remember)) {
             return redirect()->route('home');
         }
-        return redirect('login')->with('failed','Email or Password is incorrect');
+        return redirect('login')->with('failed', 'Email or Password is incorrect');
     }
 }

@@ -67,7 +67,7 @@ class RegisterController extends Controller
         return User::create([
             'username' => $data['name'],
             'email' => $data['email'],
-            'role_id' => 2,
+            'role_id' => config("enums.roles")["MEMBER"],
             'password' => Hash::make($data['password']),
         ]);
     }
