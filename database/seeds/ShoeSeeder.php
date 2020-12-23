@@ -33,6 +33,34 @@ class ShoeSeeder extends Seeder
                 'price' => 1500000,
                 'description' => 'ADAPTIVE RUNNING SHOES WITH STITCHED-IN MIDFOOT SUPPORT.',
                 'image' => 'ultraboost-20.jpg'
+            ],
+
+            [
+                'name' => 'aaa',
+                'price' => 1250000,
+                'description' => 'Adidas Running shoe.',
+                'image' => 'aaa.jpg'
+            ],
+
+            [
+                'name' => 'NMD',
+                'price' => 1500000,
+                'description' => 'Modern running shoe.',
+                'image' => 'nmd.jpg'
+            ],
+
+            [
+                'name' => 'Vans',
+                'price' => 1500000,
+                'description' => 'Classic shoe',
+                'image' => 'vans.jpg'
+            ],
+
+            [
+                'name' => 'Edge',
+                'price' => 1700000,
+                'description' => 'Adidas shoe.',
+                'image' => 'edge.jpg'
             ]
         ]);
     }
